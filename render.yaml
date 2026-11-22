@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: momanga-mirror
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python server.py"
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.6"
+      - key: STRIP_ADS
+        value: "1"
+      - key: STRIP_ANALYTICS
+        value: "0"
+      # ツールバーの統計/設定APIを保護するトークン。
+      # 未設定時は統計/設定が誰でも閲覧可能になります。
+      # Render上で個別に設定してください (sync: false でGit管理外)。
+      - key: ADMIN_TOKEN
+        sync: false
